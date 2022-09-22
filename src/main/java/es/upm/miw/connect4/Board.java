@@ -6,7 +6,7 @@ public class Board {
     Token[][] squares;
 
     public Board() {
-        squares
+        squares = new Token[ROW_NUMBER][COLUMN_NUMBER];
     }
 
     public boolean insertToken(int column) {
@@ -14,6 +14,7 @@ public class Board {
     }
 
     public boolean columnHasSpace(int column) {
-        return false;
+        Token[] column = squares[column];
+        return column.length < ROW_NUMBER;
     }
 }
