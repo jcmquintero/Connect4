@@ -1,0 +1,5 @@
+main.java.es.upm.miw.connect4.Connect4#play()V
+main.java.es.upm.miw.connect4.Player#<init>(Ljava/lang/String;Ljava/lang/String;Lmain/java/es/upm/miw/connect4/Board;)V
+main.java.es.upm.miw.connect4.Board#<init>()V
+main.java.es.upm.miw.connect4.Board#instance-init#
+main.java.es.upm.miw.connect4.Player#instance-init#

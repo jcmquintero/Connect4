@@ -1,0 +1,4 @@
+main.java.es.upm.miw.connect4.Player#play()Z
+java.util.Scanner#instance-init#
+java.util.Scanner#nextInt()I
+java.util.Scanner#<init>(Ljava/io/InputStream;)V

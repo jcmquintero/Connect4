@@ -1,0 +1,119 @@
+
+,main.java.es.upm.miw.connect4.Player#play()Zf
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java ("4*´
+2f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java (ï
+í
+f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java (
+%12java.io.PrintStream"__id*
+""†ù
+f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java (Y
+%13void".java.io.PrintStream#print(Ljava/lang/String;)V*
+
+%12java.io.PrintStream*=;
+9The selected column has no space left, try another one...2print(Ljava/lang/String;)*
+3*«
+3f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java (“
+œ
+f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java (*
+%10#main.java.es.upm.miw.connect4.Board"__id*3*1&
+$main.java.es.upm.miw.connect4.Player"
+board¸˘
+f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java (+
+%11boolean"6main.java.es.upm.miw.connect4.Board#columnHasSpace(I)Z*,
+*
+%10#main.java.es.upm.miw.connect4.Board*
+""2columnHasSpace(I)*
+2
+1*±
+4f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java' (-î
+ë
+f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java' (0
+%0java.io.InputStream"__id*
+""óî
+f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java (&
+%1java.util.Scanner"java.util.Scanner€
+ÿ
+f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java (1
+%2"0java.util.Scanner#<init>(Ljava/io/InputStream;)V*
+
+%1java.util.Scanner*
+
+%0java.io.InputStream´
+®
+f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java (2
+keyboardjava.util.Scanner"__id*
+
+%1java.util.Scannerî
+ë
+f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java (
+%3java.io.PrintStream"__id*
+""Ω
+∫
+f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java ($
+%4java.lang.String"__id*2*0&
+$main.java.es.upm.miw.connect4.Player"
+name¥
+±
+f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java (0
+%5java.lang.String"__concat*
+
+%4java.lang.String*	
+'s turn˝˙
+f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java (1
+
+%6void"0java.io.PrintStream#println(Ljava/lang/String;)V*
+
+%3java.io.PrintStream*
+
+%5java.lang.String2println(Ljava/lang/String;)î
+ë
+f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java (
+%7java.io.PrintStream"__id*
+""ôñ
+f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java (P
+
+%8void".java.io.PrintStream#print(Ljava/lang/String;)V*
+
+%7java.io.PrintStream*86
+4Select the column your token will be inserted into: 2print(Ljava/lang/String;)¿Ω
+f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java ('	
+%9int"java.util.Scanner#nextInt()I*
+
+keyboardjava.util.Scanner2	nextInt()*
+3*´
+1f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java (“
+œ
+f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java (*
+%14#main.java.es.upm.miw.connect4.Board"__id*3*1&
+$main.java.es.upm.miw.connect4.Player"
+boardˆÛ
+f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java ((
+%15boolean"3main.java.es.upm.miw.connect4.Board#insertToken(I)Z*,
+*
+%14#main.java.es.upm.miw.connect4.Board*
+""2insertToken(I)"p
+f
+\C:/Users/juanc/MIW-Workspace/IntelliJ/Connect4/src/main/java/es/upm/miw/connect4/Player.java ()
+""B(&
+$main.java.es.upm.miw.connect4.Player
