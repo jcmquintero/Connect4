@@ -2,13 +2,13 @@ package es.upm.miw.connect4;
 
 public class Token {
 
-    String colorCode;
+    Color color;
 
-    public Token(String colorCode) {
-        this.colorCode = colorCode;
+    public Token(Color color) {
+        this.color = color;
     }
 
-    public String getColorCode() {
-        return colorCode;
+    public Color getColor() {
+        return color;
     }
 }
