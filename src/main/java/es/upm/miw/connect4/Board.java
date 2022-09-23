@@ -3,6 +3,7 @@ package es.upm.miw.connect4;
 import es.upm.miw.connect4.Token;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Board {
     final static int ROW_NUMBER = 6;
@@ -67,7 +68,7 @@ public class Board {
     }
 
     public boolean columnIn(int columnNum){
-        return (columnNum >= 0 && columnNum < COLUMN_NUMBER) ? true : false;
+        return columnNum >= 0 && columnNum < COLUMN_NUMBER;
     }
     public boolean columnHasSpace(int columnNum) {
         return countFullSquaresInColumn(columnNum) < ROW_NUMBER;
@@ -75,6 +76,6 @@ public class Board {
 
     private int countFullSquaresInColumn(int columnNum) {
         Token[] column = squares[columnNum];
-        return (int) Arrays.stream(column).filter(x -> x != null).count();
+        return (int) Arrays.stream(column).filter(Objects::nonNull).count();
     }
 }
