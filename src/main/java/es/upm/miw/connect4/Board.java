@@ -66,6 +66,9 @@ public class Board {
         return isRow && itemsInRow == 4;
     }
 
+    public boolean columnIn(int columnNum){
+        return (columnNum >= 0 && columnNum < COLUMN_NUMBER) ? true : false;
+    }
     public boolean columnHasSpace(int columnNum) {
         return countFullSquaresInColumn(columnNum) < ROW_NUMBER;
     }
