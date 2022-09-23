@@ -58,7 +58,7 @@ public class Board {
         while(isRow && (itemsInRow < 4) && (checkColumn < COLUMN_NUMBER) && (checkColumn >= 0)
                 && (checkRow < ROW_NUMBER) && (checkRow >= 0) && (stepX != 0 || stepY != 0)) {
             Token token = squares[checkColumn][checkRow];
-            isRow = (token != null && token.getColorCode() == colorCode);
+            isRow = (token != null && token.getColorCode().equals(colorCode));
             checkColumn += stepY;
             checkRow += stepX;
             itemsInRow++;
