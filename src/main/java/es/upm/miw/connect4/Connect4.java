@@ -1,25 +1,43 @@
 package es.upm.miw.connect4;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 public class Connect4 {
     Board board;
-    Player[] players;
+    List<Player> players;
 
     private void play() {
         board = new Board();
-        players = new Player[]{new Player(Color.RED, board), new Player(Color.YELLOW, board)};
-        int nextPlayer = 0;
+        players = new ArrayList<>();
+        Scanner keyboard = new Scanner(System.in);
+        System.out.print("Select the number of players:");
+        int playerNum = keyboard.nextInt();
+        createPlayers(playerNum);
+        TurnManager turnManager = new TurnManager(players);
         Player winner;
         do {
-            winner = players[nextPlayer].play(); // TODO: Consultar si hay ganador a partir de board
-            // TODO: Cambiar turno solo si no hay ganador
-            nextPlayer = (nextPlayer == players.length - 1) ? 0 : nextPlayer + 1; // TODO: Cambiar por nextPlayer % players.length (o gestionar desde clase Turn)
-        } while (winner == null);
+            Player nextPlayer = turnManager.nextPlayer();
+            nextPlayer.play();
+        } while (); // TODO: Mirar si es winner
         board.print();
         System.out.println(winner.getColor() + " wins!");
     }
 
+    private void createPlayers(int playerNum) {
+        if (playerNum < 2) {
+            players.add(new RandomPlayer(Color.values()[0], board));
+            if (playerNum == 0) {
+                players.add(new RandomPlayer(Color.values()[1], board));
+            }
+        }
+        for (int i = 2; i < playerNum; i++) {
+            players.add(new HumanPlayer(Color.values()[i], board));
+        }
+    }
+
     public static void main(String[] args) {
-        Connect4 connect4 = new Connect4(); // TODO: No inicializar en una variable, hacer new y ejecutar directamente
-        connect4.play();
+        new Connect4().play();
     }
 }

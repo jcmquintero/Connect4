@@ -12,3 +12,4 @@ public class Token {
         return color;
     }
 }
+

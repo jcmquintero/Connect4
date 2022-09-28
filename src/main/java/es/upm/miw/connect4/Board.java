@@ -3,15 +3,26 @@ package es.upm.miw.connect4;
 import es.upm.miw.connect4.Token;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Board {
     final static int ROW_NUMBER = 6;
     final static int COLUMN_NUMBER = 7;
-    Token[][] squares;
+    Map<Position, Color> squares;
 
     public Board() {
-        squares = new Token[COLUMN_NUMBER][ROW_NUMBER];
+        squares = new HashMap<>();
+        initialize();
+    }
+
+    public void initialize() {
+        for (int i = 0; i < COLUMN_NUMBER; i++) {
+            for (int j = 0; j < ROW_NUMBER; i++) {
+                squares.put(new Position(i, j), Color.NONE);
+            }
+        }
     }
 
     public void print() {
@@ -21,62 +32,74 @@ public class Board {
         System.out.println();
         for (int row = ROW_NUMBER - 1; row >= 0; row--) {
             for (int column = 0; column < COLUMN_NUMBER; column++) {
-                Color color = Color.NONE;
-                if (squares[column][row] != null) {
-                    color = squares[column][row].getColor();
-                }
-                System.out.print(" [" + color.getColorCode() + "] ");
+                System.out.println(" [" + squares.get(new Position(column, row)) + "] ");
             }
             System.out.println();
         }
     }
 
-    public boolean insertToken(int column, Color color) {
-        int squareNum = countFullSquaresInColumn(column);
-        squares[column][squareNum] = new Token(color);
-        return validateMove(column, squareNum, color);
+    public void insertToken(int column, Color color) {
+        int row = countFullSquaresInColumn(column);
+        squares.put(new Position(column, row), color);
     }
 
-    private boolean validateMove(int column, int row, Color color) {
-        int[] step = {-1, 0, 1}; // TODO: Utilizar enum Dirección
-        boolean won = false;
-        for (int i = 0; i < step.length; i++) {
-            for (int j = 0; j < step.length; j++) {
-                won = checkRow(column, row, step[i], step[j], color); // TODO: Gestionar mediante clase Coordinate
-                if (won) { // TODO: No usar return -> Cambiar por while
-                    return true;
-                }
+    private boolean checkConnectFour(Position position) {
+        Color playerColor = squares.get(position);
+        Direction[] directions = Direction.values();
+        boolean isConnectFour;
+        int i = 0;
+        do {
+            isConnectFour = checkRow(position, directions[i], playerColor);
+        } while (i++ < directions.length && !isConnectFour);
+        return isConnectFour;
+    }
+
+    private boolean checkRow(Position position, Direction direction, Color playerColor) {
+        int matchingCount = 0;
+        boolean matchesColor = true;
+        Position currentPosition = position;
+        Position neighboringSquare;
+        do {
+            neighboringSquare = getNeighboringSquare(position, direction);
+            matchesColor = (squares.get(neighboringSquare) == playerColor);
+            if (matchesColor) {
+                matchingCount++;
+            } else {
+                // TODO: Moverse una casilla en direccion contraria (solo si esa casilla es del color)
+            }
+        } while (neighboringSquare != null && matchesColor && matchingCount < 4);
+        return matchesColor && matchingCount == 3;
+    }
+
+    public boolean columnHasSpace(int column) {
+        return countFullSquaresInColumn(column) < ROW_NUMBER;
+    }
+
+    public boolean columnIn(int column) {
+        return Interval.isBetween(column, 0, COLUMN_NUMBER);
+    }
+
+    private int countFullSquaresInColumn(int column) {
+        int fullSquares = 0;
+        for(int row = 0; row < ROW_NUMBER; row++) {
+            if (squares.get(new Position(column, row)) != Color.NONE) {
+                fullSquares++;
             }
         }
-        return false;
+        return fullSquares;
     }
 
-    private boolean checkRow(int column, int row, int stepX, int stepY, Color color) { // TODO: Reducir el num. de parámetros
-        boolean isRow = true;
-        int checkRow = row;
-        int checkColumn = column;
-        int itemsInRow = 0;
-        while (isRow && (itemsInRow < 4) && (checkColumn < COLUMN_NUMBER) && (checkColumn >= 0) // TODO: Comprobar intervalos mediante clase Interval
-                && (checkRow < ROW_NUMBER) && (checkRow >= 0) && (stepX != 0 || stepY != 0)) {
-            Token token = squares[checkColumn][checkRow];
-            isRow = (token != null && token.getColor() == color);
-            checkColumn += stepY;
-            checkRow += stepX;
-            itemsInRow++;
+    private Position getNeighboringSquare(Position position, Direction direction) {
+        int x = position.getX() + direction.getX();
+        int y = position.getY() + direction.getY();
+        Position neighboringSquare = null;
+        if (Interval.isBetween(x, 0, COLUMN_NUMBER) && Interval.isBetween(x, 0, ROW_NUMBER)) {
+            neighboringSquare = new Position(x, y);
         }
-        return isRow && itemsInRow == 4;
+        return neighboringSquare;
     }
 
-    public boolean columnIn(int columnNum) {
-        return columnNum >= 0 && columnNum < COLUMN_NUMBER;
-    }
-
-    public boolean columnHasSpace(int columnNum) {
-        return countFullSquaresInColumn(columnNum) < ROW_NUMBER;
-    }
-
-    private int countFullSquaresInColumn(int columnNum) {
-        Token[] column = squares[columnNum];
-        return (int) Arrays.stream(column).filter(Objects::nonNull).count();
+    public int getColumnNumber() {
+        return COLUMN_NUMBER;
     }
 }
