@@ -40,7 +40,9 @@ public class Board {
 
     public void insertToken(int column, Color color) {
         int row = countFullSquaresInColumn(column);
-        squares.put(new Position(column, row), color);
+        Position lastPosition = new Position(column, row);
+        squares.put(lastPosition, color);
+        checkConnectFour(lastPosition);
     }
 
     private boolean checkConnectFour(Position position) {
@@ -65,6 +67,10 @@ public class Board {
             if (matchesColor) {
                 matchingCount++;
             } else {
+                direction.x=-direction.x;
+                direction.y=-direction.y;
+                matchingCount=0;
+                // TODO: Comprobar si funciona, pensar si es necesario crear una función para cambiar los valores de la dirección
                 // TODO: Moverse una casilla en direccion contraria (solo si esa casilla es del color)
             }
         } while (neighboringSquare != null && matchesColor && matchingCount < 4);

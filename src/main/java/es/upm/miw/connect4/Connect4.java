@@ -17,10 +17,12 @@ public class Connect4 {
         createPlayers(playerNum);
         TurnManager turnManager = new TurnManager(players);
         Player winner;
+        boolean win = false;
         do {
             Player nextPlayer = turnManager.nextPlayer();
             nextPlayer.play();
-        } while (); // TODO: Mirar si es winner
+            win = board.checkConnectFour();
+        } while (!win); // TODO: Mirar si es winner
         board.print();
         System.out.println(winner.getColor() + " wins!");
     }
