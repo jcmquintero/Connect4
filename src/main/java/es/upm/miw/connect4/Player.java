@@ -6,17 +6,19 @@ public abstract class Player {
 
     Color color;
     Board board;
+    Connect4View view;
 
-    public Player(Color color, Board board) {
+    public Player(Color color, Board board, Connect4View view) {
         this.color = color;
         this.board = board;
+        this.view = view;
     }
 
-    public void play() {
-            board.print();
-            System.out.println(color + "'s turn");
-            int column = chooseColumn();
-            board.insertToken(column, color);
+    public boolean play() {
+        view.announcePlayerTurn(this);
+        board.print();
+        int column = chooseColumn();
+        return board.insertToken(column, color);
     }
 
     public abstract int chooseColumn();

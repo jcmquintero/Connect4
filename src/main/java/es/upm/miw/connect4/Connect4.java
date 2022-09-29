@@ -5,37 +5,39 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Connect4 {
+    Connect4View view;
     Board board;
-    List<Player> players;
+    Player[] players;
 
     private void play() {
-        board = new Board();
-        players = new ArrayList<>();
-        Scanner keyboard = new Scanner(System.in);
-        System.out.print("Select the number of players:");
-        int playerNum = keyboard.nextInt();
+        view = new Connect4View();
+        board = new Board(view);
+        players = new Player[2];
+        int playerNum = view.selectPlayerNum();
         createPlayers(playerNum);
         TurnManager turnManager = new TurnManager(players);
         Player winner;
         boolean win = false;
+        Player nextPlayer;
         do {
-            Player nextPlayer = turnManager.nextPlayer();
-            nextPlayer.play();
-            win = board.checkConnectFour();
-        } while (!win); // TODO: Mirar si es winner
-        board.print();
-        System.out.println(winner.getColor() + " wins!");
+            nextPlayer = turnManager.nextPlayer();
+            win = nextPlayer.play();
+        } while (!win);
+        view.printBoard(board.getSquares());
+        view.announceWinner(nextPlayer);
     }
 
     private void createPlayers(int playerNum) {
         if (playerNum < 2) {
-            players.add(new RandomPlayer(Color.values()[0], board));
+            players[0] = new RandomPlayer(Color.YELLOW, board, view);
             if (playerNum == 0) {
-                players.add(new RandomPlayer(Color.values()[1], board));
+                players[1] = new RandomPlayer(Color.RED, board, view);
+            } else {
+                players[1] = new HumanPlayer(Color.RED, board, view);
             }
-        }
-        for (int i = 2; i < playerNum; i++) {
-            players.add(new HumanPlayer(Color.values()[i], board));
+        } else {
+            players[0] = new HumanPlayer(Color.YELLOW, board, view);
+            players[1] = new HumanPlayer(Color.RED, board, view);
         }
     }
 

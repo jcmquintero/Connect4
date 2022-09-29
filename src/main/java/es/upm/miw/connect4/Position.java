@@ -17,4 +17,16 @@ public class Position {
     public int getY() {
         return y;
     }
+
+    public Position getNext(Direction direction) {
+        return new Position(x + direction.getX(), y + direction.getY());
+    }
+
+    public Position getPrevious(Direction direction) {
+        return new Position(x - direction.getX(), y - direction.getY());
+    }
+
+    public boolean isFourSquaresAway(Position secondPosition) {
+        return Math.abs(x - secondPosition.getX()) < 4 && Math.abs(y - secondPosition.getY()) < 4;
+    }
 }

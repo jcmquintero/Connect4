@@ -2,110 +2,113 @@ package es.upm.miw.connect4;
 
 import es.upm.miw.connect4.Token;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Board {
     final static int ROW_NUMBER = 6;
     final static int COLUMN_NUMBER = 7;
-    Map<Position, Color> squares;
+    Color[][] squares;
+    Connect4View view;
 
-    public Board() {
-        squares = new HashMap<>();
+    public Board(Connect4View view) {
+        this.view = view;
+        squares = new Color[COLUMN_NUMBER][ROW_NUMBER];
         initialize();
     }
 
     public void initialize() {
         for (int i = 0; i < COLUMN_NUMBER; i++) {
-            for (int j = 0; j < ROW_NUMBER; i++) {
-                squares.put(new Position(i, j), Color.NONE);
+            for (int j = 0; j < ROW_NUMBER; j++) {
+                squares[i][j] = Color.NONE;
             }
         }
     }
 
     public void print() {
-        for (int headerNum = 0; headerNum < COLUMN_NUMBER; headerNum++) {
-            System.out.print("  " + headerNum + "  ");
-        }
-        System.out.println();
-        for (int row = ROW_NUMBER - 1; row >= 0; row--) {
-            for (int column = 0; column < COLUMN_NUMBER; column++) {
-                System.out.println(" [" + squares.get(new Position(column, row)) + "] ");
-            }
-            System.out.println();
-        }
+        view.printBoard(squares);
     }
 
-    public void insertToken(int column, Color color) {
+    public boolean insertToken(int column, Color color) {
         int row = countFullSquaresInColumn(column);
         Position lastPosition = new Position(column, row);
-        squares.put(lastPosition, color);
-        checkConnectFour(lastPosition);
+        squares[lastPosition.getX()][lastPosition.getY()] = color;
+        return checkConnectFour(lastPosition);
     }
 
-    private boolean checkConnectFour(Position position) {
-        Color playerColor = squares.get(position);
+    public boolean checkConnectFour(Position position) {
+        Color playerColor = squares[position.getX()][position.getY()];
         Direction[] directions = Direction.values();
         boolean isConnectFour;
         int i = 0;
         do {
-            isConnectFour = checkRow(position, directions[i], playerColor);
-        } while (i++ < directions.length && !isConnectFour);
+            isConnectFour = checkDirection(position, directions[i], playerColor);
+            i++;
+        } while (i < directions.length && !isConnectFour);
+        return isConnectFour;
+    }
+
+    private boolean checkDirection(Position position, Direction direction, Color playerColor) {
+        Position startPosition = position;
+        boolean isConnectFour;
+        do {
+            isConnectFour = checkRow(startPosition, direction, playerColor);
+            if(!isConnectFour) {
+                startPosition = startPosition.getPrevious(direction);
+            }
+        } while (!isConnectFour && position.isFourSquaresAway(startPosition) && isInsideBoundaries(startPosition));
         return isConnectFour;
     }
 
     private boolean checkRow(Position position, Direction direction, Color playerColor) {
-        int matchingCount = 0;
-        boolean matchesColor = true;
-        Position currentPosition = position;
-        Position neighboringSquare;
+        int itemsInRow = 0;
+        Position nextPosition = position;
+        boolean matchesColor;
         do {
-            neighboringSquare = getNeighboringSquare(position, direction);
-            matchesColor = (squares.get(neighboringSquare) == playerColor);
-            if (matchesColor) {
-                matchingCount++;
-            } else {
-                direction.x=-direction.x;
-                direction.y=-direction.y;
-                matchingCount=0;
-                // TODO: Comprobar si funciona, pensar si es necesario crear una función para cambiar los valores de la dirección
-                // TODO: Moverse una casilla en direccion contraria (solo si esa casilla es del color)
+            matchesColor = (getSquareColor(nextPosition) == playerColor);
+            if(matchesColor) {
+                itemsInRow++;
+                nextPosition = nextPosition.getNext(direction);
             }
-        } while (neighboringSquare != null && matchesColor && matchingCount < 4);
-        return matchesColor && matchingCount == 3;
+        } while (itemsInRow < 4 && matchesColor && isInsideBoundaries(nextPosition));
+        return itemsInRow == 4;
+    }
+
+    private Color getSquareColor(Position position) {
+        return squares[position.getX()][position.getY()];
     }
 
     public boolean columnHasSpace(int column) {
         return countFullSquaresInColumn(column) < ROW_NUMBER;
     }
 
-    public boolean columnIn(int column) {
-        return Interval.isBetween(column, 0, COLUMN_NUMBER);
+    public boolean isInsideBoundaries(Position position) {
+        return Interval.isBetween(position.getX(), 0, COLUMN_NUMBER)
+                && Interval.isBetween(position.getY(), 0, ROW_NUMBER);
     }
 
     private int countFullSquaresInColumn(int column) {
         int fullSquares = 0;
         for(int row = 0; row < ROW_NUMBER; row++) {
-            if (squares.get(new Position(column, row)) != Color.NONE) {
+            if (squares[column][row] != Color.NONE) {
                 fullSquares++;
             }
         }
         return fullSquares;
     }
 
-    private Position getNeighboringSquare(Position position, Direction direction) {
-        int x = position.getX() + direction.getX();
-        int y = position.getY() + direction.getY();
-        Position neighboringSquare = null;
-        if (Interval.isBetween(x, 0, COLUMN_NUMBER) && Interval.isBetween(x, 0, ROW_NUMBER)) {
-            neighboringSquare = new Position(x, y);
+    public boolean isValidMove(int column) {
+        boolean validColumn = true;
+        if (!Interval.isBetween(column, 0, COLUMN_NUMBER)) {
+            view.announcePlayerError("The selected column does not exist, try another one...");
+            validColumn = false;
+        } else if (!columnHasSpace(column)){
+            view.announcePlayerError("The selected column has no space left, try another one...");
+            validColumn = false;
         }
-        return neighboringSquare;
+        return validColumn;
     }
 
-    public int getColumnNumber() {
-        return COLUMN_NUMBER;
+    public Color[][] getSquares() {
+        return squares;
     }
 }
