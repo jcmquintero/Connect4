@@ -2,7 +2,7 @@ package es.upm.miw.connect4;
 
 import java.util.Scanner;
 
-public class Connect4View implements UserIOManager{
+public class Connect4View implements UserIOManager {
     Scanner keyboard;
 
     public Connect4View() {

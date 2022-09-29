@@ -10,7 +10,8 @@ public enum Color {
     NONE(' ');
 
     char colorCode;
-    private Color(char colorCode) {
+
+    Color(char colorCode) {
         this.colorCode = colorCode;
     }
 

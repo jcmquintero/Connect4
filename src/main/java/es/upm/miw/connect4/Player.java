@@ -1,7 +1,5 @@
 package es.upm.miw.connect4;
 
-import java.util.Scanner;
-
 public abstract class Player {
 
     Color color;

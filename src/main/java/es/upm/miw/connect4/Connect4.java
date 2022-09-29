@@ -1,9 +1,5 @@
 package es.upm.miw.connect4;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 public class Connect4 {
     Connect4View view;
     Board board;

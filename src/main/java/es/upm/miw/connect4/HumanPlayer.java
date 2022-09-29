@@ -1,7 +1,5 @@
 package es.upm.miw.connect4;
 
-import java.util.Scanner;
-
 public class HumanPlayer extends Player {
 
     public HumanPlayer(Color color, Board board, Connect4View view) {
@@ -13,7 +11,7 @@ public class HumanPlayer extends Player {
         int column;
         do {
             column = view.manageTokenInsertion(this);
-        } while(!board.isValidMove(column));
+        } while (!board.isValidMove(column));
         return column;
     }
 }

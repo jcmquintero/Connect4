@@ -1,12 +1,8 @@
 package es.upm.miw.connect4;
 
-import es.upm.miw.connect4.Token;
-
-import java.util.*;
-
 public class Board {
-    final static int ROW_NUMBER = 6;
-    final static int COLUMN_NUMBER = 7;
+    static final int ROW_NUMBER = 6;
+    static final int COLUMN_NUMBER = 7;
     Color[][] squares;
     Connect4View view;
 
@@ -52,7 +48,7 @@ public class Board {
         boolean isConnectFour;
         do {
             isConnectFour = checkRow(startPosition, direction, playerColor);
-            if(!isConnectFour) {
+            if (!isConnectFour) {
                 startPosition = startPosition.getPrevious(direction);
             }
         } while (!isConnectFour && position.isFourSquaresAway(startPosition) && isInsideBoundaries(startPosition));
@@ -65,7 +61,7 @@ public class Board {
         boolean matchesColor;
         do {
             matchesColor = (getSquareColor(nextPosition) == playerColor);
-            if(matchesColor) {
+            if (matchesColor) {
                 itemsInRow++;
                 nextPosition = nextPosition.getNext(direction);
             }
@@ -88,7 +84,7 @@ public class Board {
 
     private int countFullSquaresInColumn(int column) {
         int fullSquares = 0;
-        for(int row = 0; row < ROW_NUMBER; row++) {
+        for (int row = 0; row < ROW_NUMBER; row++) {
             if (squares[column][row] != Color.NONE) {
                 fullSquares++;
             }
@@ -101,7 +97,7 @@ public class Board {
         if (!Interval.isBetween(column, 0, COLUMN_NUMBER)) {
             view.announcePlayerError("The selected column does not exist, try another one...");
             validColumn = false;
-        } else if (!columnHasSpace(column)){
+        } else if (!columnHasSpace(column)) {
             view.announcePlayerError("The selected column has no space left, try another one...");
             validColumn = false;
         }

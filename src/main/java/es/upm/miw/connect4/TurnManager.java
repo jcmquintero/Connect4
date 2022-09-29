@@ -1,7 +1,5 @@
 package es.upm.miw.connect4;
 
-import java.util.List;
-
 public class TurnManager {
     Player[] players;
     int moveCount;
