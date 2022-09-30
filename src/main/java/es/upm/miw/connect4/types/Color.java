@@ -3,10 +3,6 @@ package es.upm.miw.connect4.types;
 public enum Color {
     RED('R'),
     YELLOW('Y'),
-    GREEN('G'),
-    BLUE('B'),
-    PURPLE('P'),
-    WHITE('W'),
     NONE(' ');
 
     char colorCode;
@@ -18,4 +14,5 @@ public enum Color {
     public char getColorCode() {
         return colorCode;
     }
+
 }
