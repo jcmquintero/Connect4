@@ -1,13 +1,16 @@
-package es.upm.miw.connect4;
+package es.upm.miw.connect4.models;
+
+import es.upm.miw.connect4.types.Color;
+import es.upm.miw.connect4.types.Direction;
+import es.upm.miw.connect4.types.Interval;
+import es.upm.miw.connect4.types.Position;
 
 public class Board {
     static final int ROW_NUMBER = 6;
     static final int COLUMN_NUMBER = 7;
     Color[][] squares;
-    Connect4View view;
 
-    public Board(Connect4View view) {
-        this.view = view;
+    public Board() {
         squares = new Color[COLUMN_NUMBER][ROW_NUMBER];
         initialize();
     }
@@ -20,18 +23,14 @@ public class Board {
         }
     }
 
-    public void print() {
-        view.printBoard(squares);
-    }
-
-    public boolean insertToken(int column, Color color) {
+    public Position insertToken(int column, Color color) {
         int row = countFullSquaresInColumn(column);
         Position lastPosition = new Position(column, row);
         squares[lastPosition.getX()][lastPosition.getY()] = color;
-        return checkConnectFour(lastPosition);
+        return lastPosition;
     }
 
-    public boolean checkConnectFour(Position position) {
+    public boolean isConnectFour(Position position) {
         Color playerColor = squares[position.getX()][position.getY()];
         Direction[] directions = Direction.values();
         boolean isConnectFour;
@@ -92,16 +91,14 @@ public class Board {
         return fullSquares;
     }
 
-    public boolean isValidMove(int column) {
-        boolean validColumn = true;
+    public Error validateMove(int column) {
+        Error error = null;
         if (!Interval.isBetween(column, 0, COLUMN_NUMBER)) {
-            view.announcePlayerError("The selected column does not exist, try another one...");
-            validColumn = false;
+            error = new Error("The selected column does not exist. Try another one...");
         } else if (!columnHasSpace(column)) {
-            view.announcePlayerError("The selected column has no space left, try another one...");
-            validColumn = false;
+            error = new Error("The selected column has no space left. Try another one...");
         }
-        return validColumn;
+        return error;
     }
 
     public Color[][] getSquares() {

@@ -1,4 +1,4 @@
-package es.upm.miw.connect4;
+package es.upm.miw.connect4.types;
 
 public enum Direction {
     SOUTH(0, -1),
